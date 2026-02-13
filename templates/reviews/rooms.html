@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Відгуки про номери</h1>
+<ul>
+    <for room
+        in rooms>
+        <li>
+             {% for room in rooms %}
+        <li style="margin-bottom: 15px;">
+            <strong>Кімната №{{ room.number }}</strong><br>
+            Тип: {{ room.get_room_type_display }}<br>
+            Ціна: {{ room.price }} грн<br>
+
+            <a href="{% url 'room_reviews' room.id %}">
+                Переглянути відгуки
+            </a>
+        </li>
+    {% empty %}
+        <li>Кімнат поки немає</li>
+    {% endfor %}
+
+</ul>
+{% endblock %}

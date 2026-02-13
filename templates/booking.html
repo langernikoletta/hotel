@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Бронювання – Готель{% endblock %}
+
+{% block content %}
+<h1>Форма бронювання</h1>
+<p class="text-muted">Заповніть форму для бронювання кімнати</p>
+
+<form method="post" class="mt-4">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6">
+            <label for="name">Ім'я</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="col-md-6">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <label for="room">Оберіть кімнату</label>
+            <select class="form-select" id="room" name="room" required>
+                <option value="">-- Оберіть кімнату --</option>
+                <option value="1">Стандарт (2 особи)</option>
+                <option value="2">Люкс (4 особи)</option>
+                <option value="3">Сімейна (6 осіб)</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="date_range">Дата бронювання</label>
+            <input type="text" class="form-control" id="date_range" name="date_range" placeholder="дд.мм.рррр - дд.мм.рррр" required>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-4">Забронювати</button>
+</form>
+{% endblock %}

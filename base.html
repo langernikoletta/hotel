@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Готель – Система бронювання{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/">Готель</a>
+                <img src="nash.png" alt="Готель Логотип" style="width: 40px; height: 40px; margin-left: 10px;">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/">Головна</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/about/">Про нас</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/booking/">Бронювання</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/calendar/">Календар</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/admin/">Адмін-панель</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/reviews/">Відгуки</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <p>&copy; 2025 Готель. Усі права захищені.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

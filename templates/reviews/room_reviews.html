@@ -1,0 +1,21 @@
+@login_required
+def room_reviews(request, room_id):
+    room = get_object_or_404(Room, id=room_id)
+    reviews = room.reviews.all()
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.room = room
+            review.user = request.user
+            review.save()
+            return redirect('room_reviews', room_id=room.id)
+    else:
+        form = ReviewForm()
+
+    return render(request, 'reviews/room_reviews.html', {
+        'room': room,
+        'reviews': reviews,
+        'form': form,
+    })
