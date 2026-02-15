@@ -1,23 +1,26 @@
 {% extends "base.html" %}
+
+{% block title %}Відгуки – Готель{% endblock %}
+
 {% block content %}
 <h1>Відгуки про номери</h1>
-<ul>
-    <for room
-        in rooms>
-        <li>
-             {% for room in rooms %}
-        <li style="margin-bottom: 15px;">
-            <strong>Кімната №{{ room.number }}</strong><br>
-            Тип: {{ room.get_room_type_display }}<br>
-            Ціна: {{ room.price }} грн<br>
+<p class="text-muted">Оберіть номер, щоб подивитись відгуки і додати свій.</p>
 
-            <a href="{% url 'room_reviews' room.id %}">
+<ul class="list-group mt-3">
+    {% for room in rooms %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <strong>Кімната №{{ room.number }}</strong><br>
+                <small class="text-muted">
+                    Тип: {{ room.get_room_type_display }} | Ціна: {{ room.price }} грн
+                </small>
+            </div>
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'room_reviews' room.id %}">
                 Переглянути відгуки
             </a>
         </li>
     {% empty %}
-        <li>Кімнат поки немає</li>
+        <li class="list-group-item">Кімнат поки немає.</li>
     {% endfor %}
-
 </ul>
 {% endblock %}

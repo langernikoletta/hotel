@@ -16,6 +16,7 @@ urlpatterns = [
     # Основні сторінки
     path('', main_views.home, name='home'),
     path('about/', main_views.about, name='about'),
+    path('booking/', main_views.booking_view, name='booking'),
     path('calendar/', main_views.calendar_view, name='calendar'),
 
     # Бронювання (API)
@@ -35,4 +36,3 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-

@@ -2,15 +2,17 @@
 Main app views for hotel project.
 """
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
+from django.contrib import messages
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.http import url_has_allowed_host_and_scheme
-from .models import Booking
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+
+from .forms import BookingForm, ReviewForm
 from .models import Room
+from .models import Booking
 
 
 def _apply_bootstrap(form):
@@ -33,6 +35,20 @@ def about(request):
 def calendar_view(request):
     """Render the calendar page."""
     return render(request, 'main/calendar.html')
+
+
+def booking_view(request):
+    """Create a booking from the website form."""
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Бронювання успішно створено.')
+            return redirect('booking')
+    else:
+        form = BookingForm()
+
+    return render(request, 'booking.html', {'form': form})
 
 
 def api_bookings(request):
@@ -98,9 +114,24 @@ def reviews_rooms(request):
 def room_reviews(request, room_id):
     """Відгуки конкретної кімнати"""
     room = get_object_or_404(Room, id=room_id)
-    reviews = room.reviews.all()
+    reviews = room.reviews.select_related('user').all()
+    form = ReviewForm()
+
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect(f"{reverse('login')}?next={request.path}")
+
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.room = room
+            review.user = request.user
+            review.save()
+            messages.success(request, 'Дякуємо за відгук.')
+            return redirect('room_reviews', room_id=room.id)
 
     return render(request, 'reviews/room_reviews.html', {
         'room': room,
-        'reviews': reviews
+        'reviews': reviews,
+        'form': form,
     })
